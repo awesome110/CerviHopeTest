@@ -10,6 +10,29 @@ IMAGE_URL = "https://cdn.cancercenter.com/-/media/ctca/images/others/blogs/2016/
 PREDICTED_LABELS.sort()
 tab_main, tab_info, tab_about = st.tabs(['Main', 'Info', 'About'])
 
+def extract_user_data(filename):
+  """
+  Extracts user data from a JSON file.
+
+  Args:
+    filename: The path to the JSON file.
+
+  Returns:
+    A list of dictionaries, where each dictionary represents a user and contains 
+    the following keys: 'id', 'username', 'password', and 'type'.
+  """
+  with open(filename, 'r') as f:
+    data = json.load(f)
+    return data['users']
+
+# Print the extracted data
+for user in user_data:
+  print(f"ID: {user['id']}")
+  print(f"Username: {user['username']}")
+  print(f"Password: {user['password']}")
+  print(f"Type: {user['type']}")
+  print("-" * 20) 
+
 def get_prediction(image_data):
   #replace your image classification ai service endpoint URL
   url = 'https://askai.aiclub.world/c23bffea-9fc9-41f9-b2bf-ac7e272f1e9b'  
@@ -83,7 +106,8 @@ def app_page():
             st.metric("Prediction Label",response_label)
             st.metric("Confidence Score", max(scores))
     with tab_info:
-        st.header('b')
+        filename = 'users_info.json'  # Replace with the actual filename
+        user_data = extract_user_data(filename)
     with tab_about:
         st.header('c')
 

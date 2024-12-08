@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "id":1,
+            "username":"admin",
+            "password":"password123",
+            "type": "admin"
+        },
+        {
+            "id":2,
+            "username":"billy83",
+            "password":"billyIsTh3Best5674",
+            "type":"doctor"
+        }
+    ]
+}
