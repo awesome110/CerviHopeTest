@@ -8,6 +8,7 @@ import io
 PREDICTED_LABELS = ['High squamous intra-epithelial lesion','Low squamous intra-epithelial lesion','Negative for Intraepithelial malignancy','Squamous cell carcinoma']
 IMAGE_URL = "https://cdn.cancercenter.com/-/media/ctca/images/others/blogs/2016/08-august/09-news-cell-wars-fb.jpg"
 PREDICTED_LABELS.sort()
+tab_main, tab_info, tab_about = st.tabs(['Main', 'Info', 'About'])
 
 def get_prediction(image_data):
   #replace your image classification ai service endpoint URL
@@ -37,13 +38,12 @@ def login_page():
             st.error("Invalid username or password.")
 
 def app_page():
-    with st.sidebar:
-        with st.echo():
-            st.write("This code will be printed to the sidebar.")
-
-        with st.spinner("Loading..."):
-            time.sleep(5)
-        st.success("Done!")
+    with tab_main:
+        st.header('a')
+    with tab_info:
+        st.header('b')
+    with tab_about:
+        st.header('c')
 
     st.title('CerviHope')
     #setting the main picture
