@@ -39,13 +39,7 @@ def login_page():
 
 def app_page():
     with tab_main:
-        st.header('a')
-    with tab_info:
-        st.header('b')
-    with tab_about:
-        st.header('c')
-
-    st.title('CerviHope')
+        st.title('CerviHope')
     #setting the main picture
     st.image(IMAGE_URL, caption = "Image Classification")
 
@@ -88,6 +82,10 @@ def app_page():
         response_label = PREDICTED_LABELS[response]
         st.metric("Prediction Label",response_label)
         st.metric("Confidence Score", max(scores))
+    with tab_info:
+        st.header('b')
+    with tab_about:
+        st.header('c')
 
 # Main logic
 if st.session_state["logged_in"]:
