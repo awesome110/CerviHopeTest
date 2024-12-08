@@ -40,52 +40,53 @@ def login_page():
 def app_page():
     with tab_main:
         st.title('CerviHope')
-    #setting the main picture
-    st.image(IMAGE_URL, caption = "Image Classification")
+        #setting the main picture
+        st.image(IMAGE_URL, caption = "Image Classification")
 
-    #about the web app
-    st.header("About the Web App")
+        #about the web app
+        st.header("About the Web App")
 
-    #details about the project
-    with st.expander("Web App 🌐"):
-        st.subheader("Cancer Cell Predictions")
-        st.write("""My app is designed to predict and classify cancer cell images into one of the following categories :
-        1.High squamous intra-epithelial lesion
-        2.Low squamous intra-epithelial lesion
-        3.Negative for Intraepithelial malignancy
-        4.Squamous cell carcinoma""")
-    #setting file uploader
-    image =st.file_uploader("Upload a cancer cell image",type = ['jpg','png','jpeg'])
-    if image:
-        #converting the image to bytes
-        img = Image.open(image).convert('RGB') #ensuring to convert into RGB as model expects the image to be in 3 channel
-        buf = io.BytesIO()
-        img.save(buf,format = 'JPEG')
-        byte_im = buf.getvalue()
+        #details about the project
+        with st.expander("Web App 🌐"):
+            st.subheader("Cancer Cell Predictions")
+            st.write("""My app is designed to predict and classify cancer cell images into one of the following categories :
+            1.High squamous intra-epithelial lesion
+            2.Low squamous intra-epithelial lesion
+            3.Negative for Intraepithelial malignancy
+            4.Squamous cell carcinoma""")
+        #setting file uploader
+        image =st.file_uploader("Upload a cancer cell image",type = ['jpg','png','jpeg'])
+        if image:
+            #converting the image to bytes
+            img = Image.open(image).convert('RGB') #ensuring to convert into RGB as model expects the image to be in 3 channel
+            buf = io.BytesIO()
+            img.save(buf,format = 'JPEG')
+            byte_im = buf.getvalue()
 
-        #converting bytes to b64encoding
-        payload = base64.b64encode(byte_im)
-        #file details
-        file_details = {
-            "file name": image.name,
-            "file type": image.type,
-            "file size": image.size
-        }
-        #write file details
-        st.write(file_details)
-        #setting up the image
-        st.image(img)
-        #predictions
-        response, scores = get_prediction(payload)
-        #if you are using the model deployment in navigator
-        #you need to define the labels
-        response_label = PREDICTED_LABELS[response]
-        st.metric("Prediction Label",response_label)
-        st.metric("Confidence Score", max(scores))
+            #converting bytes to b64encoding
+            payload = base64.b64encode(byte_im)
+            #file details
+            file_details = {
+                "file name": image.name,
+                "file type": image.type,
+                "file size": image.size
+            }
+            #write file details
+            st.write(file_details)
+            #setting up the image
+            st.image(img)
+            #predictions
+            response, scores = get_prediction(payload)
+            #if you are using the model deployment in navigator
+            #you need to define the labels
+            response_label = PREDICTED_LABELS[response]
+            st.metric("Prediction Label",response_label)
+            st.metric("Confidence Score", max(scores))
     with tab_info:
         st.header('b')
     with tab_about:
         st.header('c')
+
 
 # Main logic
 if st.session_state["logged_in"]:
